@@ -10,11 +10,16 @@ import (
 )
 
 type Server struct {
-	pb.UnimplementedHelloServer
+	pb.UnimplementedProductsServer
 }
 
-func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloResponse, error) {
-	return &pb.HelloResponse{Message: "Hello " + in.GetName()}, nil
+func (s *Server) GetProduct(ctx context.Context, in *pb.ProductRequest) (*pb.Product, error) {
+    return &pb.Product{
+        Id: in.Id,
+        Name: "Product " + in.Id,
+        Description: "Description of product " + in.Id,
+        Status: pb.ProductStatus_ACTIVE,
+    }, nil
 }
 
 func main() {
@@ -27,7 +32,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterHelloServer(s, &Server{})
+	pb.RegisterProductsServer(s, &Server{})
 
 	if error := s.Serve(listener); error != nil {
 		log.Fatalf("failed to serve: %v", error)

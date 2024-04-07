@@ -6,7 +6,7 @@ option go_package = "./pb";
 
 import "google/protobuf/empty.proto";
 
-enum ProductStatus = {
+enum ProductStatus {
     ACTIVE = 0;
     INACTIVE = 1;
 }
